@@ -14,7 +14,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     RadioButton jrbEmprendimiento, jrbInteligencia, jrbAuditoria, jrbSeguridad;
-    TextView jtvTotal, jtvPrecioIngles;
+    TextView jtvTotal, jtvPrecioIngles, jtvCre, jtvMats;
     EditText jetValCre, jetCantCre;
     CheckBox jcbIngles;
     Button jbtCalc, jbtLimp;
@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         jrbSeguridad = findViewById(R.id.rbSeguridad);
         jtvTotal = findViewById(R.id.tvTotal);
         jtvPrecioIngles = findViewById(R.id.tvPrecioIngles);
+        jtvCre = findViewById(R.id.tvCre);
+        jtvMats = findViewById(R.id.tvMats);
         jetValCre = findViewById(R.id.etValCre);
         jetCantCre = findViewById(R.id.etCantCre);
         jcbIngles = findViewById(R.id.cbIngles);
@@ -48,20 +50,29 @@ public class MainActivity extends AppCompatActivity {
         valor = jetValCre.getText().toString();
         cant = jetCantCre.getText().toString();
 
-        if(valor.isEmpty() && cant.isEmpty()){
-            Toast.makeText(this,"Ingrese los valores y cantidad para continuar", Toast.LENGTH_LONG).show();
+        if(valor.isEmpty()){
+            Toast.makeText(this,"Ingrese el valor para continuar", Toast.LENGTH_LONG).show();
             jetValCre.requestFocus();
+        }else if(cant.isEmpty()){
+            Toast.makeText(this,"Ingrese la cantidad para continuar", Toast.LENGTH_LONG).show();
+            jetCantCre.requestFocus();
         }else{
             int val_cre, cant_cre, val_mat, mat_add, val_ing, val_tot;
 
             val_cre = Integer.parseInt(valor);
             cant_cre = Integer.parseInt(cant);
-            mat_add = Integer.parseInt(jtvTotal.getText().toString());
-            val_mat = val_cre * cant_cre;
-            val_ing =  Integer.parseInt(jtvPrecioIngles.getText().toString());
-            val_tot = val_mat + val_ing +mat_add;
-            jtvTotal.setText(String.valueOf(val_tot));
 
+            mat_add = Integer.parseInt(jtvMats.getText().toString());
+            val_mat = val_cre * cant_cre;
+
+
+            val_ing = Integer.parseInt(jtvPrecioIngles.getText().toString());
+
+            val_tot = val_mat + val_ing +mat_add;
+
+            jtvMats.setText(String.valueOf(mat_add));
+            jtvCre.setText(String.valueOf(val_mat));
+            jtvTotal.setText(String.valueOf(val_tot));
         }
     }
 
@@ -70,22 +81,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Emprendimiento(View view){
-        jtvTotal.setText("280000");
+        jtvMats.setText("280000");
         calc_tot();
     }
 
     public void Inteligencia(View view){
-        jtvTotal.setText("310000");
+        jtvMats.setText("310000");
         calc_tot();
     }
 
     public void Audioria(View view){
-        jtvTotal.setText("355000");
+        jtvMats.setText("355000");
         calc_tot();
     }
 
     public void Seguridad(View view){
-        jtvTotal.setText("400000");
+        jtvMats.setText("400000");
         calc_tot();
     }
 
@@ -101,10 +112,12 @@ public class MainActivity extends AppCompatActivity {
     public void Limpiar(View view){
         jetValCre.setText("");
         jetCantCre.setText("");
+        jtvCre.setText("");
         jrbEmprendimiento.setChecked(true);
+        jtvMats.setText("280000");
         jcbIngles.setChecked(false);
         jtvPrecioIngles.setText("0");
-        jtvTotal.setText("280000");
+        jtvTotal.setText("0");
         jetValCre.requestFocus();
     }
 }
